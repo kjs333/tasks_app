@@ -3,6 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:tasks_app/core/app_theme.dart';
 import 'package:tasks_app/ui/pages/home/home_page_view_model.dart';
 import 'package:tasks_app/ui/pages/home/widgets/home_page_bottomsheet.dart';
+import 'package:tasks_app/ui/pages/home/widgets/home_page_btm_navigation.dart';
 import '../../../data/model/to_do_entity.dart';
 import 'widgets/no_to_do.dart';
 import 'widgets/sort_btn.dart';
@@ -81,28 +82,21 @@ class _HomePageState extends ConsumerState<HomePage> {
               : Expanded(child: toDoWidgetList(context, ref)),
         ],
       ),
-      bottomSheet: Container(
-        width: double.infinity,
-        height: 100,
-        color: vrc(context).generalBack,
-      ),
+      bottomNavigationBar: HomePageBtmNavigation(),
       // 투두 추가 버튼
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.only(bottom: 100),
-        child: FloatingActionButton(
-          backgroundColor: fxc(context).brandColor,
-          shape: CircleBorder(),
-          child: Icon(Icons.add, color: Colors.white, size: 24),
-          onPressed: () {
-            showModalBottomSheet<ToDoEntity>(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-              ),
-              context: context,
-              builder: (context) => HomePageBottomsheet(),
-            );
-          },
-        ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: fxc(context).brandColor,
+        shape: CircleBorder(),
+        child: Icon(Icons.add, color: Colors.white, size: 24),
+        onPressed: () {
+          showModalBottomSheet<ToDoEntity>(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+            ),
+            context: context,
+            builder: (context) => HomePageBottomsheet(),
+          );
+        },
       ),
     );
   }

@@ -7,24 +7,18 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:tasks_app/data/repository/weather_repository.dart';
 
 import 'package:tasks_app/main.dart';
+import 'package:tasks_app/ui/pages/home/weather_info_view_model.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
-
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
-
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
-
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+  test("Location Test", () async {
+    final weatherRepo = WeatherRepository();
+    final result = await weatherRepo.getWeather(
+      latitude: 37.550263,
+      longitude: 126.9970831,
+    );
+    print(result?.weatherDescription);
   });
 }
