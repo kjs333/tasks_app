@@ -42,8 +42,9 @@ class HomePageBtmNavigation extends ConsumerWidget {
                       .refreshWeather();
                 },
                 child: Container(
+                  alignment: Alignment.topCenter,
                   width: 50,
-                  height: 100,
+                  height: 50,
                   child: Icon(Icons.refresh),
                 ),
               ),
