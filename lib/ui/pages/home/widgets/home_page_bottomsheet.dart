@@ -62,7 +62,9 @@ class HomePageBottomsheet extends HookConsumerWidget {
                     await ref
                         .read(homePageViewModelProvider.notifier)
                         .addTodo(toDo: newTodo);
-                    Navigator.of(context).pop();
+                    if (context.mounted) {
+                      Navigator.of(context).pop();
+                    }
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
@@ -149,7 +151,9 @@ class HomePageBottomsheet extends HookConsumerWidget {
                           await ref
                               .read(homePageViewModelProvider.notifier)
                               .addTodo(toDo: newTodo);
-                          Navigator.of(context).pop();
+                          if (context.mounted) {
+                            Navigator.of(context).pop();
+                          }
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
