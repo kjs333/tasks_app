@@ -34,7 +34,7 @@ class HomePageBtmNavigation extends ConsumerWidget {
                 },
                 child: Container(
                   alignment: Alignment.topCenter,
-                  width: 50,
+                  width: 45,
                   height: 50,
                   child: Icon(Icons.refresh),
                 ),
@@ -48,7 +48,12 @@ class HomePageBtmNavigation extends ConsumerWidget {
                         child: Text("잠시 후 다시 새로고침해주세요."),
                       )
                     : Padding(
-                        padding: const EdgeInsets.all(10),
+                        padding: const EdgeInsets.only(
+                          left: 0,
+                          right: 10,
+                          top: 10,
+                          bottom: 10,
+                        ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.end,
                           spacing: 10,
@@ -69,7 +74,7 @@ class HomePageBtmNavigation extends ConsumerWidget {
                             ),
                             Text(
                               textAlign: TextAlign.end,
-                              '날씨:${data.weatherDescription} 온도:${data.temperature}°C  풍속:${data.windSpeed}m/s',
+                              '날씨:${data.weatherDescription} 온도:${data.temperature}°C 풍속:${data.windSpeed}m/s',
                             ),
                           ],
                         ),

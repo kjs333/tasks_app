@@ -20,10 +20,10 @@ class HomePageBottomsheet extends HookConsumerWidget {
     final isFavorite = useState(false);
     return Padding(
       padding: EdgeInsets.only(
-        top: 12,
+        top: 20,
         right: 20,
         left: 20,
-        bottom: MediaQuery.of(context).viewInsets.bottom,
+        bottom: 20 + MediaQuery.of(context).viewInsets.bottom,
       ),
       child: Container(
         height: detailBtnClicked.value ? 200 : 90,
@@ -82,9 +82,10 @@ class HomePageBottomsheet extends HookConsumerWidget {
             ),
             detailBtnClicked.value
                 ? Expanded(
-                    flex: 2,
+                    flex: 3,
                     child: TextField(
                       textInputAction: TextInputAction.newline,
+                      minLines: 2,
                       maxLines: null,
                       controller: descController,
                       decoration: InputDecoration(
@@ -94,7 +95,7 @@ class HomePageBottomsheet extends HookConsumerWidget {
                       ),
                     ),
                   )
-                : SizedBox(),
+                : Spacer(),
             Expanded(
               child: Row(
                 children: [
@@ -105,8 +106,11 @@ class HomePageBottomsheet extends HookConsumerWidget {
                           onTap: () {
                             detailBtnClicked.value = true;
                           },
-                          child: SizedBox(
+                          child: Container(
+                            width: 40,
                             height: 40,
+                            alignment: Alignment.centerLeft,
+                            color: Colors.transparent,
                             child: Icon(Icons.short_text_rounded, size: 24),
                           ),
                         ),
@@ -116,9 +120,15 @@ class HomePageBottomsheet extends HookConsumerWidget {
                       onTap: () {
                         isFavorite.value = !isFavorite.value;
                       },
-                      child: Icon(
-                        isFavorite.value ? Icons.star : Icons.star_border,
-                        size: 24,
+                      child: Container(
+                        width: 40,
+                        height: 40,
+                        color: Colors.transparent,
+                        alignment: Alignment.centerLeft,
+                        child: Icon(
+                          isFavorite.value ? Icons.star : Icons.star_border,
+                          size: 24,
+                        ),
                       ),
                     ),
                   ),
@@ -155,14 +165,20 @@ class HomePageBottomsheet extends HookConsumerWidget {
                           Navigator.of(context).pop();
                         }
                       },
-                      child: Text(
-                        "저장",
-                        textAlign: TextAlign.right,
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: isTitleNotEmpty.value
-                              ? vrc(context).textColor100
-                              : vrc(context).textColor200,
+                      child: Container(
+                        width: 40,
+                        height: 40,
+                        color: Colors.transparent,
+                        alignment: Alignment.center,
+                        child: Text(
+                          "저장",
+                          textAlign: TextAlign.right,
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: isTitleNotEmpty.value
+                                ? vrc(context).textColor100
+                                : vrc(context).textColor200,
+                          ),
                         ),
                       ),
                     ),
