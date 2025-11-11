@@ -13,7 +13,7 @@ part of 'home_page_view_model.dart';
 const homePageViewModelProvider = HomePageViewModelProvider._();
 
 final class HomePageViewModelProvider
-    extends $NotifierProvider<HomePageViewModel, HomePageState> {
+    extends $AsyncNotifierProvider<HomePageViewModel, HomePageState?> {
   const HomePageViewModelProvider._()
     : super(
         from: null,
@@ -31,30 +31,22 @@ final class HomePageViewModelProvider
   @$internal
   @override
   HomePageViewModel create() => HomePageViewModel();
-
-  /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(HomePageState value) {
-    return $ProviderOverride(
-      origin: this,
-      providerOverride: $SyncValueProvider<HomePageState>(value),
-    );
-  }
 }
 
-String _$homePageViewModelHash() => r'327ac8d1f8ede6e6d6d192b76787720956673a81';
+String _$homePageViewModelHash() => r'8ec48404be747479e32560d10dc20f8b555060b4';
 
-abstract class _$HomePageViewModel extends $Notifier<HomePageState> {
-  HomePageState build();
+abstract class _$HomePageViewModel extends $AsyncNotifier<HomePageState?> {
+  FutureOr<HomePageState?> build();
   @$mustCallSuper
   @override
   void runBuild() {
     final created = build();
-    final ref = this.ref as $Ref<HomePageState, HomePageState>;
+    final ref = this.ref as $Ref<AsyncValue<HomePageState?>, HomePageState?>;
     final element =
         ref.element
             as $ClassProviderElement<
-              AnyNotifier<HomePageState, HomePageState>,
-              HomePageState,
+              AnyNotifier<AsyncValue<HomePageState?>, HomePageState?>,
+              AsyncValue<HomePageState?>,
               Object?,
               Object?
             >;

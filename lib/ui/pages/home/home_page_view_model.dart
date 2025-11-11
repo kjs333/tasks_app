@@ -10,49 +10,42 @@ class HomePageViewModel extends _$HomePageViewModel {
   final ToDoRepository toDoRepository = ToDoRepository();
 
   @override
-  HomePageState build() {
-    getToDos();
-    return HomePageState(todoList: [], sortWithDate: true, sortWithDone: true);
+  Future<HomePageState> build() async {
+    state = AsyncLoading();
+    final todoList = await toDoRepository.getToDos();
+    return HomePageState(
+      todoList: todoList,
+      sortWithDate: true,
+      sortWithDone: true,
+    );
   }
 
   Future<void> getToDos() async {
     final todoList = await toDoRepository.getToDos();
-    state.sortWithDate
+    state.value!.sortWithDate
         ? todoList.sort(compareDate)
         : todoList.sort(compareStar);
-    state = state.copyWith(todoList: todoList);
+    state = AsyncData(state.value!.copyWith(todoList: todoList));
   }
 
   Future<void> addTodo({required ToDoEntity toDo}) async {
     final result = await toDoRepository.addToDo(toDo);
     if (result) {
-      List<ToDoEntity> newList = state.todoList.toList();
+      List<ToDoEntity> newList = state.value!.todoList.toList();
       newList.add(toDo);
       //정렬
-      if (state.sortWithDate) {
-        newList.sort(compareDate);
-      } else {
-        newList.sort(compareStar);
-      }
-      if (!state.sortWithDone) {
-        newList = newList.where((todo) => !todo.isDone).toList();
-      }
-      state = state.copyWith(todoList: newList);
+      toDoListSort(newList);
     }
   }
 
   Future<void> updateTodo({required ToDoEntity updated}) async {
     final result = await toDoRepository.updateToDo(updated);
     if (result) {
-      List<ToDoEntity> newList = state.todoList.toList();
+      List<ToDoEntity> newList = state.value!.todoList.toList();
       final index = newList.indexWhere((e) => e.id == updated.id);
       newList[index] = updated;
-      if (state.sortWithDate) {
-        newList.sort(compareDate);
-      } else {
-        newList.sort(compareStar);
-      }
-      state = state.copyWith(todoList: newList);
+      //정렬
+      toDoListSort(newList);
     }
   }
 
@@ -60,13 +53,13 @@ class HomePageViewModel extends _$HomePageViewModel {
     required String id,
     required bool isFavorite,
   }) async {
-    final toDo = state.todoList.firstWhere((e) => e.id == id);
+    final toDo = state.value!.todoList.firstWhere((e) => e.id == id);
     final updated = toDo.copyWith(isFavorite: isFavorite);
     await updateTodo(updated: updated);
   }
 
   Future<void> toggleDone({required String id, required bool isDone}) async {
-    final toDo = state.todoList.firstWhere((e) => e.id == id);
+    final toDo = state.value!.todoList.firstWhere((e) => e.id == id);
     final updated = toDo.copyWith(isDone: isDone);
     await updateTodo(updated: updated);
   }
@@ -74,38 +67,41 @@ class HomePageViewModel extends _$HomePageViewModel {
   Future<void> deleteTodo({required String id}) async {
     final result = await toDoRepository.deleteToDo(id);
     if (result) {
-      List<ToDoEntity> newList = state.todoList
+      List<ToDoEntity> newList = state.value!.todoList
           .where((todo) => todo.id != id)
           .toList();
       //정렬
-      if (state.sortWithDate) {
-        newList.sort(compareDate);
-      } else {
-        newList.sort(compareStar);
-      }
-      state = state.copyWith(todoList: newList);
+      toDoListSort(newList);
     }
   }
 
-  void todoListSortWithDate() {
-    if (!state.sortWithDate) {
-      List<ToDoEntity> sorted = state.todoList.toList();
-      sorted.sort(compareDate);
-      state = state.copyWith(todoList: sorted, sortWithDate: true);
+  void toDoListSort([List<ToDoEntity>? newList]) {
+    newList ??= state.value!.todoList.toList();
+    if (state.value!.sortWithDate) {
+      newList.sort(compareDate);
+    } else {
+      newList.sort(compareStar);
+    }
+    state = AsyncData(state.value!.copyWith(todoList: newList));
+  }
+
+  void toggleSortWithDate() {
+    if (!state.value!.sortWithDate) {
+      state = AsyncData(state.value!.copyWith(sortWithDate: true));
+      toDoListSort();
     }
   }
 
-  void todoListSortWithStar() {
-    if (state.sortWithDate) {
-      List<ToDoEntity> sorted = state.todoList.toList();
-      sorted.sort(compareStar);
-      state = state.copyWith(todoList: sorted, sortWithDate: false);
+  void toggleSortWithStar() {
+    if (state.value!.sortWithDate) {
+      state = AsyncData(state.value!.copyWith(sortWithDate: false));
+      toDoListSort();
     }
   }
 
-  void todoListWithoutDone() {
-    final old = state.sortWithDone;
-    state = state.copyWith(sortWithDone: !old);
+  void toggleSortWithDone() {
+    final old = state.value!.sortWithDone;
+    state = AsyncData(state.value!.copyWith(sortWithDone: !old));
   }
 
   int compareDate(ToDoEntity a, ToDoEntity b) =>
