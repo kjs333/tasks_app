@@ -10,7 +10,6 @@ class ToDoRepository {
       await docRef.set(toDo.toJson());
       return true;
     } catch (e) {
-      print(e);
       return false;
     }
   }
@@ -22,7 +21,6 @@ class ToDoRepository {
       await docRef.update(toDo.toJson());
       return true;
     } catch (e) {
-      print(e);
       return false;
     }
   }
@@ -34,7 +32,6 @@ class ToDoRepository {
       await docRef.delete();
       return true;
     } catch (e) {
-      print(e);
       return false;
     }
   }
@@ -50,10 +47,8 @@ class ToDoRepository {
         final data = documents[i].data();
         todoList.add(ToDoEntity.fromJson(data));
       }
-
       return todoList;
     } catch (e) {
-      print(e);
       return [];
     }
   }
