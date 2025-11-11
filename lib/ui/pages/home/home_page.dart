@@ -41,9 +41,12 @@ class HomePage extends ConsumerWidget {
         ),
         error: (error, stackTrace) => Text("에러: $error"),
         data: (data) {
+          if (data == null) {
+            return SizedBox();
+          }
           return Column(
             children: [
-              data!.todoList.isEmpty
+              data.todoList.isEmpty
                   ? SizedBox()
                   : SizedBox(
                       height: 40,
