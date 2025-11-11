@@ -10,25 +10,19 @@ import 'widgets/no_to_do.dart';
 import 'widgets/sort_btn.dart';
 import 'widgets/to_do_view.dart';
 
-class HomePage extends ConsumerStatefulWidget {
+class HomePage extends ConsumerWidget {
   final String titleName;
   const HomePage({super.key, required this.titleName});
   @override
-  ConsumerState<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends ConsumerState<HomePage> {
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(homePageViewModelProvider);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: vrc(context).bodyBack,
-      // 3-1번
       appBar: AppBar(
         backgroundColor: vrc(context).appBarBack,
         title: Text(
-          widget.titleName,
+          titleName,
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
         ),
         centerTitle: true,
@@ -92,7 +86,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                       ),
                     ),
               data.todoList.isEmpty
-                  ? NoToDo(widget.titleName)
+                  ? NoToDo(titleName: titleName)
                   : Expanded(child: toDoWidgetList(context, ref, data)),
             ],
           );
@@ -104,8 +98,8 @@ class _HomePageState extends ConsumerState<HomePage> {
         backgroundColor: fxc(context).brandColor,
         shape: CircleBorder(),
         child: Icon(Icons.add, color: Colors.white, size: 24),
-        onPressed: () {
-          showModalBottomSheet<ToDoEntity>(
+        onPressed: () async {
+          await showModalBottomSheet<ToDoEntity>(
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
             ),

@@ -8,7 +8,12 @@ class SortBtn extends ConsumerWidget {
   final bool btnOn;
   final String text;
   final Function(WidgetRef ref) onTap;
-  SortBtn({required this.btnOn, required this.text, required this.onTap});
+  const SortBtn({
+    super.key,
+    required this.btnOn,
+    required this.text,
+    required this.onTap,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

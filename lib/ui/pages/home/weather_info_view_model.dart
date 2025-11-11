@@ -15,7 +15,6 @@ class WeatherInfoViewModel extends _$WeatherInfoViewModel {
   Future<WeatherModel?> getWeather() async {
     try {
       final position = await GeolocatorHelper.getPositon();
-      //print('포지션 : ${position?.latitude}, ${position?.longitude}');
       if (position != null) {
         final weatherRepo = WeatherRepository();
         final response = await weatherRepo.getWeather(
@@ -26,16 +25,13 @@ class WeatherInfoViewModel extends _$WeatherInfoViewModel {
       }
       return null;
     } catch (e) {
-      //print(e);
       return null;
     }
   }
 
   Future<void> refreshWeather() async {
-    //print("refresh Weather");
     state = AsyncLoading();
     final response = await getWeather();
     state = AsyncData(response);
-    //print(state.value?.time);
   }
 }

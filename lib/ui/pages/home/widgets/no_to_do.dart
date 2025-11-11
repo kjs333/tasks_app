@@ -4,7 +4,7 @@ import 'package:tasks_app/core/app_theme.dart';
 class NoToDo extends StatelessWidget {
   final String titleName;
 
-  NoToDo(this.titleName);
+  const NoToDo({super.key, required this.titleName});
 
   @override
   Widget build(BuildContext context) {
