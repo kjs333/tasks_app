@@ -12,7 +12,8 @@ class HomePageViewModel extends _$HomePageViewModel {
   @override
   Future<HomePageState> build() async {
     state = AsyncLoading();
-    final todoList = await toDoRepository.getToDos();
+    List<ToDoEntity> todoList = await toDoRepository.getToDos();
+    todoList.sort(compareDate);
     return HomePageState(
       todoList: todoList,
       sortWithDate: true,
