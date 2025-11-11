@@ -107,10 +107,10 @@ class HomePageViewModel extends _$HomePageViewModel {
   int compareDate(ToDoEntity a, ToDoEntity b) =>
       a.createdAt.compareTo(b.createdAt);
   int compareStar(ToDoEntity a, ToDoEntity b) {
-    if (a.isFavorite || b.isFavorite) {
-      return a.isFavorite ? -1 : 1;
-    } else {
+    if ((a.isFavorite && b.isFavorite) || (!a.isFavorite && !b.isFavorite)) {
       return compareDate(a, b);
+    } else {
+      return a.isFavorite ? -1 : 1;
     }
   }
 }
