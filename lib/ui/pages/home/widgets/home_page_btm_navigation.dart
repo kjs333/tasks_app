@@ -62,7 +62,7 @@ class HomePageBtmNavigation extends ConsumerWidget {
                                   ),
                                 ),
                                 SizedBox(width: 10),
-                                (data.time.hour >= 6 && data.time.hour <= 18)
+                                (data.time.hour >= 6 && data.time.hour < 18)
                                     ? Icon(Icons.sunny)
                                     : Icon(Icons.nightlight_round),
                               ],
