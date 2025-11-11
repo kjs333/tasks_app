@@ -177,12 +177,16 @@ class HomePageBottomsheet extends HookConsumerWidget {
                         child: Text(
                           "저장",
                           textAlign: TextAlign.right,
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: isTitleNotEmpty.value
-                                ? vrc(context).textColor100
-                                : vrc(context).textColor200,
-                          ),
+                          style: isTitleNotEmpty.value
+                              ? TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold,
+                                  color: vrc(context).textColor100,
+                                )
+                              : TextStyle(
+                                  fontSize: 14,
+                                  color: vrc(context).textColor200,
+                                ),
                         ),
                       ),
                     ),

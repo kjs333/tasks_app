@@ -39,7 +39,9 @@ class ToDoDetailPage extends HookConsumerWidget {
                 await ref
                     .read(homePageViewModelProvider.notifier)
                     .updateTodo(updated: updatedTodo);
-                Navigator.of(context).pop();
+                if (context.mounted) {
+                  Navigator.of(context).pop();
+                }
               } else {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
